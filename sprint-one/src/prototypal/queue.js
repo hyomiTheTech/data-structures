@@ -1,4 +1,5 @@
 var Queue = function() {
+  // use Object.Create
   var queue = Object.create(queueMethods);
 
   queue.storage = {};

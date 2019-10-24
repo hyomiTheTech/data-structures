@@ -1,4 +1,5 @@
 var Stack = function() {
+  // use Object.Create
   var stack = Object.create(stackMethods);
 
   stack.storage = {};
