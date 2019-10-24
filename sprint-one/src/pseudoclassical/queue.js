@@ -6,6 +6,7 @@ var Queue = function() {
   // but try not not reference your old code in writing the new style.
 };
 
+// prototype
 Queue.prototype.enqueue = function(value) {
   this.count++;
   this.storage[this.count] = value;

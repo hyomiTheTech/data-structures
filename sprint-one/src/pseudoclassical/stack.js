@@ -5,6 +5,7 @@ var Stack = function() {
   // but try not not reference your old code in writing the new style.
 };
 
+// prototype
 Stack.prototype.push = function(value) {
   this.count++;
   this.storage[this.count] = value;
