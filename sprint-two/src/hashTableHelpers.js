@@ -15,18 +15,48 @@ var LimitedArray = function(limit) {
   var storage = [];
 
   var limitedArray = {};
-  limitedArray.get = function(index) {
+
+  limitedArray.get = function(index, key) {
     checkLimit(index);
-    return storage[index];
+    var found = this.find(index, key);
+    if (found === false) {
+      return undefined;
+    } else {
+      var tuple = storage[index][found];
+      return tuple[1];
+    }
   };
-  limitedArray.set = function(index, value) {
+
+  limitedArray.set = function(index, tuple) {
     checkLimit(index);
-    storage[index] = value;
+    if (Array.isArray(storage[index])) {
+      var found = this.find(index, tuple[0]);
+      if (found !== false) {
+        storage[index][found] = tuple;
+      } else {
+        storage[index].push(tuple);
+      }
+    } else {
+      storage[index] = [];
+      storage[index].push(tuple);
+    }
   };
+
   limitedArray.each = function(callback) {
     for (var i = 0; i < storage.length; i++) {
       callback(storage[i], i, storage);
     }
+  };
+
+  limitedArray.find = function(index, key) {
+    var tuples = storage[index];
+    for (var i = 0; i < tuples.length; i++) {
+      var tuple = tuples[i];
+      if (tuple[0] === key) {
+        return i;
+      }
+    }
+    return false;
   };
 
   var checkLimit = function(index) {
@@ -53,7 +83,3 @@ var getIndexBelowMaxForKey = function(str, max) {
   }
   return hash % max;
 };
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */
